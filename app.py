@@ -1,33 +1,14 @@
-import requests
-import gradio as gr
 
+    import streamlit as st
+from deep_translator import GoogleTranslator
 
-def translate_text(text, source_lang, target_lang):
-    if not text.strip():
-        return "Please enter some text to translate."
+st.set_page_config(
+    page_title="AI Language Translation Tool",
+    page_icon="🌐"
+)
 
-    if source_lang == target_lang:
-        return text
-
-    url = "https://api.mymemory.translated.net/get"
-
-    params = {
-        "q": text,
-        "langpair": f"{source_lang}|{target_lang}"
-    }
-
-    try:
-        response = requests.get(url, params=params, timeout=10)
-        data = response.json()
-
-        if data.get("responseStatus") == 200:
-            return data["responseData"]["translatedText"]
-
-        return "Translation failed. Please try again."
-
-    except Exception as e:
-        return f"Error: {str(e)}"
-
+st.title("🌐 AI Language Translation Tool")
+st.write("Translate text between different languages using AI-powered translation.")
 
 languages = {
     "English": "en",
@@ -36,111 +17,32 @@ languages = {
     "Tamil": "ta",
     "Kannada": "kn",
     "Malayalam": "ml",
-    "Bengali": "bn",
-    "Marathi": "mr",
-    "Gujarati": "gu",
     "French": "fr",
     "German": "de",
     "Spanish": "es",
-    "Italian": "it",
-    "Portuguese": "pt",
-    "Japanese": "ja",
-    "Korean": "ko",
-    "Chinese": "zh"
+    "Japanese": "ja"
 }
 
+source = st.selectbox("Source Language", list(languages.keys()))
+target = st.selectbox("Target Language", list(languages.keys()))
 
-def translate_from_dropdown(text, source, target):
-    return translate_text(
-        text,
-        languages[source],
-        languages[target]
-    )
+text = st.text_area(
+    "Enter text to translate",
+    placeholder="Type your text here..."
+)
 
+if st.button("Translate"):
+    if text.strip():
+        try:
+            translated = GoogleTranslator(
+                source=languages[source],
+                target=languages[target]
+            ).translate(text)
 
-with gr.Blocks(title="AI Language Translation Tool") as app:
+            st.success("Translation completed!")
+            st.text_area("Translated Text", translated, height=150)
 
-    gr.Markdown(
-        """
-        # 🌍 AI Language Translation Tool
-
-        ### Translate text instantly between multiple languages
-
-        This application uses a translation API to convert text
-        from one language to another.
-        """
-    )
-
-    with gr.Row():
-
-        with gr.Column():
-            source_language = gr.Dropdown(
-                choices=list(languages.keys()),
-                value="English",
-                label="🌐 Source Language"
-            )
-
-            input_text = gr.Textbox(
-                label="📝 Enter Text",
-                placeholder="Type the text you want to translate...",
-                lines=8
-            )
-
-        with gr.Column():
-            target_language = gr.Dropdown(
-                choices=list(languages.keys()),
-                value="Hindi",
-                label="🌐 Target Language"
-            )
-
-            output_text = gr.Textbox(
-                label="✅ Translated Text",
-                lines=8
-            )
-
-    with gr.Row():
-
-        translate_button = gr.Button(
-            "🔄 Translate",
-            variant="primary"
-        )
-
-        clear_button = gr.Button(
-            "🗑️ Clear"
-        )
-
-    translate_button.click(
-        fn=translate_from_dropdown,
-        inputs=[
-            input_text,
-            source_language,
-            target_language
-        ],
-        outputs=output_text
-    )
-
-    clear_button.click(
-        fn=lambda: ("", ""),
-        inputs=None,
-        outputs=[input_text, output_text]
-    )
-
-    gr.Markdown(
-        """
-        ---
-        ### ✨ Features
-
-        - 🌐 Multiple language support
-        - ⚡ API-based translation
-        - 📝 Easy text input
-        - 🔄 Instant translation
-        - 🗑️ Clear button
-        - 💻 User-friendly interface
-
-        **Developed as part of the CodeAlpha Artificial Intelligence Internship.**
-        """
-    )
-
-
-if __name__ == "__main__":
-    app.launch()
+        except Exception as e:
+            st.error(f"Translation failed: {e}")
+    else:
+        st.warning("Please enter some text.")
