@@ -20,18 +20,18 @@ The application is deployed using **Streamlit Community Cloud** and can be acces
 
 Language barriers can make communication difficult between people who speak different languages.
 
-The **AI Language Translation Tool** provides a web-based solution that allows users to enter text, select the source and target languages, and receive the translated text.
+The **AI Language Translation Tool** provides a web-based solution that allows users to enter text, select a source language and target language, and receive the translated text.
 
-The application uses an online translation API to process the translation request.
+The application uses the **MyMemory Translation API** to process translation requests.
 
 ---
 
 ## ✨ Features
 
-- 🌍 Supports multiple languages
+- 🌍 Multiple language support
 - 🔤 Source language selection
 - 🌐 Target language selection
-- 📝 Text input area
+- 📝 Text input
 - 🔄 One-click translation
 - ⚡ Online translation API integration
 - ✅ Translation status messages
@@ -62,13 +62,13 @@ The application currently supports:
 
 ## 🛠️ Technologies Used
 
-- 🐍 **Python**
-- 🎈 **Streamlit**
-- 🌐 **MyMemory Translation API**
-- 📡 **Requests**
-- ☁️ **Streamlit Community Cloud**
-- 🐙 **GitHub**
-- 📓 **Google Colab**
+- 🐍 Python
+- 🎈 Streamlit
+- 🌐 MyMemory Translation API
+- 📡 Requests
+- ☁️ Streamlit Community Cloud
+- 🐙 GitHub
+- 📓 Google Colab
 
 ---
 
