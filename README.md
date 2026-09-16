@@ -10,7 +10,7 @@ The application provides a simple and user-friendly interface for translating te
 
 ### 🔗 Try the Application
 
-👉 https://cyvefq.streamlit.app
+👉https://codealphalanguagetranslationtool-nmfstu4pm2kkobjmcyvefq.streamlit.app/
 
 The application is deployed using **Streamlit Community Cloud** and can be accessed directly from a web browser.
 
